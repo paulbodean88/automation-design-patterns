@@ -1,5 +1,6 @@
 """
-Description: module providing the implementation of the base page class of the object pattern pattern.
+Description:
+    - module providing the implementation of the base page class of the object pattern pattern.
 Methods:
     - wait_unit_valid
     - quit browser
@@ -43,4 +44,7 @@ class BasePage(object):
         )
 
     def quit_browser(self):
+        """
+        Quit the browser
+        """
         self._driver.quit()
