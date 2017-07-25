@@ -2,8 +2,7 @@
 Different project related utilities like Selenium driver connection
 """
 from typing import Union
-from webbrowser import Chrome, Mozilla
-
+from selenium.webdriver import Chrome, Firefox
 from selenium.webdriver import Remote
 
 from src.singleton.singleton_factory import SingletonFactory
@@ -22,7 +21,7 @@ def get_appium_driver(url, desired_capabilities) -> Remote:
                                   desired_capabilities=desired_capabilities)
 
 
-def get_selenium_driver(browser_name: str) -> Union[Chrome, Mozilla]:
+def get_selenium_driver(browser_name: str) -> Union[Chrome, Firefox]:
     """
     Return the same instance to the Selenium driver.
 
@@ -35,8 +34,7 @@ def get_selenium_driver(browser_name: str) -> Union[Chrome, Mozilla]:
         return SingletonFactory.build(Chrome)
 
     elif browser_name.upper() == 'Mozilla':
-        return SingletonFactory.build(Mozilla)
+        return SingletonFactory.build(Firefox)
 
     else:
         raise NotImplementedError
-
