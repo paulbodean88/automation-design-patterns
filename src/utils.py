@@ -38,3 +38,36 @@ def get_selenium_driver(browser_name: str) -> Union[Chrome, Firefox]:
 
     else:
         raise NotImplementedError
+
+
+def click_retry(driver: Union[Chrome, Firefox], element_identifier: str, id_type: str):
+    """
+    Click on elements based on id type.
+    Currently supported ids are:
+    * xpath
+    * css_selector
+
+    :param driver: browser Driver
+    :type driver: object
+    :param element_identifier: id of the element
+    :type element_identifier: str
+    :param id_type: selector type e.g. xpath
+    :type id_type: str
+    """
+
+    def retry(action: staticmethod):
+        """
+        Retry an action if raise an error
+
+        :param action: click to be performed
+        :type action: staticmethod
+        """
+        try:
+            action
+        except RuntimeError:
+            action
+
+    if id_type == 'xpath':
+        retry(driver.find_element_by_xpath(element_identifier).click())
+    else:
+        retry(driver.find_element_by_css_selector(element_identifier).click())

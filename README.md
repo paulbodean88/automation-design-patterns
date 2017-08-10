@@ -31,6 +31,10 @@ Use the power of design patterns to solve different software automation related 
 
 ## Singleton 
 
+## Factory pattern
+### Simple factory
+### Abstract factory
+
 ## Authors
 * Paul Bodean
 * Eugen Meltis
