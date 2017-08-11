@@ -22,8 +22,8 @@ class TestSimpleFactory(TestCase):
         :rtype: object
         """
         driver = get_selenium_driver('chrome')
-        driver.get('https://www.youtube.com/')
         driver.set_window_size(1200, 800)
+        driver.get('https://www.youtube.com/')
         return driver, App(driver)
 
     def test_factory(self):
