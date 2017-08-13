@@ -31,6 +31,19 @@ Use the power of design patterns to solve different software automation related 
 
 ## Singleton 
 
+###Summery
+* Creational design pattern.
+* Provides an easy way to create a single instance of an object.
+
+###Example
+* Access the same instance of the driver session class.
+1. The entire definition of the object class is encapsulated in the builder class:
+    * The outer class exposes a method that returns the instance of the inner class.
+
+2. Design a class that handles the instantiation.
+    * Inject the definition of the desired class in the singleton factory
+    and the factory is responsible for returning the same instance.
+
 ## Factory pattern
 ### Simple factory
 ### Abstract factory
