@@ -89,7 +89,7 @@ class TemplateTest(metaclass=ABCMeta):
         """
         pass
 
-    def get_sections(self):
+    def get_sections(self) -> dict:
         """
 
         :return: all section to be tested in a TestCase
