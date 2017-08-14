@@ -1,20 +1,20 @@
 from unittest import TestCase
 
-from src.builder.template_test_case import TestTemplate
+from src.builder.template_test_case import TemplateTestBuilder
 from src.utils import get_selenium_driver
 
 
-class TestTestTemplate(TestCase):
+class TestTemplateTestBuilder(TestCase):
 
     def setUp(self):
-        driver = get_selenium_driver('chrome')
-        driver.get('https://www.youtube.com/')
-        self.template = TestTemplate(driver)
+        self.driver = get_selenium_driver('chrome')
+        self.driver.get('https://www.youtube.com/')
 
     def test_one(self):
-        self.template.wait(1)
-        self.template.click_element('//*[@id="appbar-guide-button"]/span/span')
-        self.template.wait(1)
-        self.template.execute_test()
+        test_case = TemplateTestBuilder(self.driver)\
+                     .wait(1) \
+                     .click_element('//*[@id="appbar-guide-button"]/span/span') \
+                     .wait(1) \
+                     .build()
 
-
+        test_case.execute()
