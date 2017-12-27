@@ -11,7 +11,7 @@ from src.page_object_pattern.base_page import BasePage
 
 class HomePage(BasePage):
     """
-    Search page
+    Home page
     """
     SEARCH_CONTAINER = 'searchInput'
     SEARCH_BUTTON = 'searchButton'
@@ -27,7 +27,7 @@ class HomePage(BasePage):
 
     def check_search(self):
         """
-        Click on search button
+        Check search button is visible
         """
         return self._driver.find_element_by_id(HomePage.SEARCH_BUTTON).is_displayed()
 
@@ -39,7 +39,7 @@ class HomePage(BasePage):
 
     def check_login(self):
         """
-        Check a UI element is visible
+        Check Login button is visible
         """
         return self._driver.find_element_by_id(HomePage.LOGIN).is_displayed()
 
@@ -51,7 +51,7 @@ class HomePage(BasePage):
 
     def check_create_account(self):
         """
-        Press create account button
+        Check create account button available
         """
         return self._driver.find_element_by_id(HomePage.CREATE_ACCOUNT).is_displayed()
 

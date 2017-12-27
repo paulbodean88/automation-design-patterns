@@ -24,13 +24,6 @@ class TestTemplate(unittest.TestCase):
         self.driver = webdriver.Chrome()
         self.driver.get("https://en.wikipedia.org/wiki/Main_Page")
 
-    def actions(self):
-        """
-        This must be overridden by the tests implementation
-        Note: setUp method must be always called
-        """
-        pass
-
     def tearDown(self):
         """
         Quit the browser
