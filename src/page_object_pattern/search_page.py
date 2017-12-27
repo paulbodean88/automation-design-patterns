@@ -6,7 +6,6 @@ class declaration.
 @date: 25/07/2017
 """
 
-from selenium.webdriver.common.by import By
 from src.page_object_pattern.base_page import BasePage
 
 
@@ -14,28 +13,45 @@ class SearchPage(BasePage):
     """
     Search page
     """
-    SEARCH_CONTAINER = '//*[@id="masthead-search-term"]'
-    SEARCH_BUTTON = '//*[@id="search-btn"]'
+    HEADING = 'firstHeading'
+    SEE_ALSO = 'See_also'
+    DOMAIN_ARTICLES = 'Domain-specific_articles'
+    READING = 'Further_reading'
+    REF = 'References'
+    EXTERNAL_LINKS = 'External_links'
 
-    def set_search_query(self, query: str):
+    def heading_text(self):
         """
-        Search for a string
-        :param query: string to look for
-        :type query: string
+        :return: Get the heading text
         """
-        self._driver.find_element_by_xpath(SearchPage.SEARCH_CONTAINER).send_keys(query)
+        return self._driver.find_element_by_id(SearchPage.HEADING).text
 
-    def search(self):
+    def see_also_text(self):
         """
-        Click on search button
+        :return: see also text
         """
-        self._driver.find_element_by_xpath(SearchPage.SEARCH_BUTTON).click()
+        return self._driver.find_element_by_xpath(SearchPage.SEE_ALSO).text
 
-    def filter_results(self, string: str):
+    def domain_articles_text(self):
         """
+        :return: domain article title
+        """
+        return self._driver.find_element_by_xpath(SearchPage.DOMAIN_ARTICLES).text
 
-        :param string: search for an element containing a specific string
-        :type string: str
+    def reading_text(self):
         """
-        self.wait_until_valid(By.PARTIAL_LINK_TEXT, string)
-        self._driver.find_elements_by_partial_link_text(string)[0].click()
+        :return: reading text
+        """
+        return self._driver.find_element_by_xpath(SearchPage.READING).text
+
+    def ref_text(self):
+        """
+        :return: reference text value
+        """
+        return self._driver.find_element_by_xpath(SearchPage.REF).text
+
+    def external_links_text(self):
+        """
+        :return: external links text value
+        """
+        return self._driver.find_element_by_xpath(SearchPage.EXTERNAL_LINKS).text

@@ -2,39 +2,22 @@
 Description: Test case implementation based on page object pattern and unittest
 
 """
-import unittest
-
+from src.page_object_pattern.home_page import HomePage
 from src.page_object_pattern.search_page import SearchPage
-from src.utils import get_selenium_driver
+from src.page_object_pattern.test_template import TestTemplate
 
 
-class TestSearchPage(unittest.TestCase):
+class TestSearchPage(TestTemplate):
     """
     Test class for testing a search on Youtube
     """
 
-    def setUp(self):
-        """
-        Driver setup
-        :return: Chrome driver
-        :rtype: object
-        """
-        driver = get_selenium_driver('chrome')
-        driver.get('https://www.youtube.com/')
-        return driver
-
-    def test_search_string(self):
+    def test_result_found(self):
         """
         Perform searches
         """
-        page = SearchPage(self.setUp())
-        page.set_search_query('python')
-        page.search()
-        page.filter_results('Python')
-
-    def tearDown(self):
-        """
-        Quit browser
-        """
-        self.setUp().quit()
-
+        home_page = HomePage(self.driver)
+        home_page.set_search_query("Design patterns")
+        home_page.search()
+        result = SearchPage(self.driver)
+        assert result.heading_text() == "Design pattern"
