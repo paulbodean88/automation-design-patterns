@@ -1,4 +1,7 @@
 import abc
+from selenium.webdriver import Chrome
+
+from src.utils import get_selenium_driver
 
 
 class TestManager:
@@ -9,32 +12,29 @@ class TestManager:
     """
 
     __builder = None
+    __status = True
 
     def set_manager(self, builder):
         self.__builder = builder
 
     def get_test(self):
-        # test = Test()
         # Pre validation
         pre_validation = self.__builder.get_pre_validation()
-        print(pre_validation)
-        # test.set_pre_validation(pre_validation)
-        # Set wait
-        wait = self.__builder.get_wait()
-        print(wait)
-        # test.set_wait(wait)
-        # Set action
-        action = self.__builder.get_actions()
-        print(action)
-        # test.set_action(action)
-        # Make comparison
-        comparison = self.__builder.get_post_validation()
-        print(comparison)
-        # test.set_post_validation(comparison)
+        # Set flow
+        if pre_validation:
+            self.__builder.get_flow()
+            # Make comparison
+            if self.__builder.get_post_validation():
+                self.__status = True
+            else:
+                self.__status = False
+
+        else:
+            self.__status = False
         # Post results
-        report = self.__builder.get_report()
-        print(report)
-        # test.set_report(report)
+        self.__builder.get_report(self.__status)
+        # Close driver
+        self.__builder.close()
 
 
 class Test:
@@ -44,26 +44,6 @@ class Test:
 
     def __init__(self):
         pass
-        # self._pre_validation = None
-        # self._wait = None
-        # self._action = None
-        # self._post_validation = None
-        # self._report = None
-
-    # def set_pre_validation(self, action):
-    #     self._pre_validation = action
-    #
-    # def set_wait(self, action):
-    #     self._wait = action
-    #
-    # def set_action(self, action):
-    #     self._action = action
-    #
-    # def set_post_validation(self, action):
-    #     self._post_validation = action
-    #
-    # def set_report(self, action):
-    #     self._report = action
 
 
 class Builder(metaclass=abc.ABCMeta):
@@ -72,18 +52,16 @@ class Builder(metaclass=abc.ABCMeta):
     """
 
     def __init__(self):
+        self._driver = get_selenium_driver('chrome')
         self.product = Test()
+        self._driver.get('https://en.wikipedia.org/')
 
     @abc.abstractmethod
     def get_pre_validation(self):
         pass
 
     @abc.abstractmethod
-    def get_wait(self):
-        pass
-
-    @abc.abstractmethod
-    def get_actions(self):
+    def get_flow(self):
         pass
 
     @abc.abstractmethod
@@ -91,47 +69,44 @@ class Builder(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_report(self):
+    def get_report(self, status):
         pass
 
+    def close(self):
+        self._driver.quit()
 
-class HomePage(Builder):
+
+class SearchFlow(Builder):
+    """
+    Definition of a concrete builder
+    """
+    SEARCH_CONTAINER = 'searchInput'
+    SEARCH_BUTTON = 'searchButton'
+    CREATE_ACCOUNT = 'pt-createaccount'
+    LOGIN = 'pt-login'
+    HEADING = 'firstHeading'
+
     def get_pre_validation(self):
-        return "pre_validation"
+        """
+        Validate if UI is available for the environment to be tested
+        :return: True or False
+        """
+        return self._driver.find_element_by_id('p-search').is_displayed()
 
-    def get_actions(self):
-        return "actions"
+    def get_flow(self):
+        """
 
-    def get_wait(self):
-        return "wait"
+        :return: True if validation succeeded
+        """
+        self._driver.find_element_by_id(SearchFlow.SEARCH_CONTAINER).send_keys('Design patterns')
+        self._driver.find_element_by_id(SearchFlow.SEARCH_BUTTON).click()
 
     def get_post_validation(self):
-        return "post_validation"
+        """
 
-    def get_report(self):
-        return "report"
+        :return: True if flow was executed
+        """
+        return self._driver.find_element_by_id(SearchFlow.HEADING).text == 'Design pattern'
 
-
-class SearchPage(Builder):
-    def get_pre_validation(self):
-        pass
-
-    def get_actions(self):
-        pass
-
-    def get_wait(self):
-        pass
-
-    def get_post_validation(self):
-        pass
-
-    def get_report(self):
-        pass
-
-
-home_builder = HomePage()
-manager = TestManager()
-manager.set_manager(home_builder)
-manager.get_test()
-
-# print('home_test', home_test.set_report("demo"))
+    def get_report(self, status):
+        print("Test execution:", status)
