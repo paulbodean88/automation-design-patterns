@@ -1,5 +1,4 @@
 import abc
-from selenium.webdriver import Chrome
 
 from src.utils import get_selenium_driver
 
