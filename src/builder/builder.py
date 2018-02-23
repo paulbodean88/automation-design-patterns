@@ -14,9 +14,18 @@ class TestManager:
     __status = True
 
     def set_manager(self, builder):
+        """
+        Selection of the builder which will construct the product
+        :param builder: concrete builder which will implement the product
+        """
+
         self.__builder = builder
 
     def get_test(self):
+        """
+        Prepare the test product to be delivered to a client
+        """
+
         # Pre validation
         pre_validation = self.__builder.get_pre_validation()
         # Set flow
