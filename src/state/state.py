@@ -50,6 +50,7 @@ class StartTest(State):
     """
 
     def run(self):
+        print(" Start test state!!! ")
         self.get_driver().get('https://en.wikipedia.org/')
 
 
@@ -61,6 +62,7 @@ class ExecuteTest(State):
     SEARCH_BUTTON = 'searchButton'
 
     def run(self):
+        print(" Execute test steps state!!! ")
         if self.get_driver().find_element_by_id(ExecuteTest.SEARCH_BUTTON).is_displayed():
             print("Search button available")
             self._driver.find_element_by_id(ExecuteTest.SEARCH_BUTTON).click()
@@ -74,6 +76,7 @@ class StopTest(State):
     """
 
     def run(self):
+        print(" Stop test state!!! ")
         self.get_driver().quit()
 
 
