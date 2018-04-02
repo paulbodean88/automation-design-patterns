@@ -84,6 +84,6 @@ if __name__ == '__main__':
     start = StartTest()
     execute = ExecuteTest()
     stop = StopTest()
-    for state in [start, execute, stop]:
-        manager = Manager(state)
+    for test_state in [start, execute, stop]:
+        manager = Manager(test_state)
         manager.get_state()
