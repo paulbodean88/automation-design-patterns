@@ -86,6 +86,6 @@ def get_process_info_spike(process):
             if process == 'memory':
                 return p.memory_percent()
             elif process == 'cpu':
-                return p.cpu_percent()
+                return p.cpu_percent(interval=1)
             else:
                 return p
