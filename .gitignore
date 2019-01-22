@@ -100,3 +100,7 @@ ENV/
 # mypy
 .mypy_cache/
 .idea/
+From messy automation to page object pattern in Python.docx
+.
+src/.DS_Store
+src/page_object_pattern/page-object-pattern.xml

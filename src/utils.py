@@ -4,6 +4,7 @@ Different project related utilities like Selenium driver connection
 from typing import Union
 from selenium.webdriver import Chrome, Firefox
 from selenium.webdriver import Remote
+import psutil
 
 from src.singleton.singleton_factory import SingletonFactory
 
@@ -71,3 +72,20 @@ def click_retry(driver: Union[Chrome, Firefox], element_identifier: str, id_type
         retry(driver.find_element_by_xpath(element_identifier).click())
     else:
         retry(driver.find_element_by_css_selector(element_identifier).click())
+
+
+def get_process_info_spike(process):
+    """
+
+    :param process: get system information like memory consumption, cpu usage
+    :return:
+    """
+    for process_id in psutil.pids():
+        p = psutil.Process(process_id)
+        if p.name() == 'pycharm':
+            if process == 'memory':
+                return p.memory_percent()
+            elif process == 'cpu':
+                return p.cpu_percent(interval=1)
+            else:
+                return p
